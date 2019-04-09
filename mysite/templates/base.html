@@ -1,22 +1,49 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %} {% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
 </head>
+
+
 <body>
-    <div class="nav">
-        <div class="w">
-            <a class="font" style="float: left" href="#">LOGO</a>
-            <a class="font" href="{% url 'home' %}">首页</a>
-            <a class="font" href="{% url 'blog_home' %}">博客</a>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="{% url 'home' %}">Logo</a>
+
         </div>
-    </div>
+
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="{% block home_active %}{% endblock %}"><a href="{% url 'home' %}">首页 <span class="sr-only">(current)</span></a></li>
+                <li class="{% block blog_active %}{% endblock %}"><a href="{% url 'blog_home' %}">博客</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
 <div>
     {% block content %}{% endblock %}
 </div>
 
+
+<script src="{% static 'bootstrap-3.3.7-dist/js/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
 </body>
 </html>

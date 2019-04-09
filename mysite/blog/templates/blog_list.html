@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Blog List{% endblock %}
+{% block blog_active %}active{% endblock %}
 {% block content %}
     {% for blog in blogs %}
         <a style="text-decoration: none" href="{% url 'blog_detail' blog.pk %}">
