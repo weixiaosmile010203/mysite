@@ -17,3 +17,19 @@ div.blog h3 {
     margin-top:0.5em;
 }
 
+ul.blog_info_description {
+    list-style-type: none;
+    margin-bottom: 1em;
+}
+
+ul.blog_info_description li {
+    display: inline-block;
+    margin-right: 1em;
+}
+div.blog_content {
+    margin-left: 3em;
+    margin-right: 3em;
+    text-indent: 2em;
+    word-wrap:break-word;
+word-break:break-all;
+}

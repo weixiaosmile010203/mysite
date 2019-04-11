@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">博客列表(当前共有博客<span style="color: crimson">{{ blogs|length }}</span>篇)</div>
+                    <div class="panel-heading">{% block blog_list_title %}博客列表(当前共有博客<span style="color: crimson">{{ blogs|length }}</span>篇){% endblock %}</div>
                     {% for blog in blogs %}
                         <div class="blog">
                             <h3><a href="{% url 'blog_detail' blog.pk %}">{{ blog.title }}</a></h3>
