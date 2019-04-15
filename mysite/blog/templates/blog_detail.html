@@ -4,21 +4,22 @@
 
 {% block content %}
     <div class="container">
-    <div class="row">
-        <div class="col-xs-12 ">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3>{{ blog.title }}</h3></div>
-                <ul class="blog_info_description">
-                    <li><span class="glyphicon glyphicon-user"></span>作者：{{ blog.author }}</li>
-                    <li><span class="glyphicon glyphicon-tags"></span>分类: <a href="{% url 'blog_with_type' blog.blog_type.pk %}">
-                        {{ blog.blog_type }}
-                    </a></li>
-                    <li><span class="glyphicon glyphicon-time"></span>时间：{{ blog.created_time }}</li>
-                </ul>
-                <div class="blog_content">{{ blog.content }}</div>
+        <div class="row">
+            <div class="col-xs-12 ">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>{{ blog.title }}</h3></div>
+                    <ul class="blog_info_description">
+                        <li><span class="glyphicon glyphicon-user"></span>作者：{{ blog.author }}</li>
+                        <li><span class="glyphicon glyphicon-tags"></span>分类: <a
+                                href="{% url 'blog_with_type' blog.blog_type.pk %}">
+                            {{ blog.blog_type }}
+                        </a></li>
+                        <li><span class="glyphicon glyphicon-time"></span>时间：{{ blog.created_time }}</li>
+                    </ul>
+                    <div class="blog_content">{{ blog.content }}</div>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
