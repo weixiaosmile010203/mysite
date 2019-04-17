@@ -42,7 +42,7 @@
                                 <span aria-hidden="false">&laquo;</span>
                             {% endif %}
                         </li>
-                        {% for page_num in page_of_blogs.paginator.page_range %}
+                        {% for page_num in page_range %}
                             <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
                         {% endfor %}
                         <li>
