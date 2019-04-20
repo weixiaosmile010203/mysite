@@ -4,9 +4,9 @@ from django.core.paginator import Paginator
 
 
 def blog_list(request):
-    page_num = request.GET.get('page', 1)#获取URL的页面参数（GET请求）
-    blogs_all_list = Blog.objects.all()
-    paginator = Paginator(blogs_all_list, 10)
+    page_num = request.GET.get('page', 1)  # 获取URL的页面参数（GET请求）得到页码
+    blogs_all_list = Blog.objects.all()  # 获取所有博客
+    paginator = Paginator(blogs_all_list, 10)  # 多所有的博客进行分页，每10篇分为一页
     page_of_blogs = paginator.get_page(page_num)
     currentr_page_num = page_of_blogs.number
     if paginator.num_pages > 7:
@@ -20,7 +20,7 @@ def blog_list(request):
     else:
         page_range = list(paginator.page_range)
 
-    if page_range[0] -1 > 1:
+    if page_range[0] - 1 > 1:
         page_range.insert(0, '...')
     if paginator.num_pages - page_range[-1] > 1:
         page_range.append('...')
@@ -39,7 +39,10 @@ def blog_list(request):
 
 def blog_detail(request, blog_pk):
     context = {}
-    context['blog'] = get_object_or_404(Blog, pk=blog_pk)
+    blog = get_object_or_404(Blog, pk=blog_pk)
+    context['previous_blog'] = Blog.objects.filter(created_time__gt=blog.created_time).last()
+    context['next_blog'] = Blog.objects.filter(created_time__lt=blog.created_time).first()
+    context['blog'] = blog
     return render_to_response('blog_detail.html', context)
 
 
@@ -73,9 +76,8 @@ def blog_with_type(request, blog_type_pk):
 
     context = {}
     context['blog_type'] = blog_type
-    context['blogs'] = Blog.objects.filter(blog_type=blog_type)
+    context['blogs'] = blogs_all_list
     context['page_range'] = page_range
     context['page_of_blogs'] = page_of_blogs
     context['blog_types'] = BlogType.objects.all()
     return render_to_response('blog_with_type.html', context)
-
