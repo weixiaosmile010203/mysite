@@ -1,0 +1,7 @@
+{% extends 'blog_list.html' %}
+{% block title %}分类{% endblock %}
+{% block blog_list_title %}
+    日期归档： {{ blog_with_date }}
+    (当前共有博客<span style="color: crimson">{{ blogs.count }}</span>篇)
+    <a href="{% url 'blog_home' %}">查看全部分类</a>
+{% endblock %}
