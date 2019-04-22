@@ -31,12 +31,18 @@ def blog_list(request):
     if page_range[-1] != paginator.num_pages:
         page_range.append(paginator.num_pages)
 
+    # 博客日期分类中的博客数量
+    blog_dates = Blog.objects.dates('created_time', 'month', order="DESC")
+    blog_dates_dict = {}
+    for blog_date in blog_dates:
+        blog_dates_dict[blog_date] = Blog.objects.filter(created_time__year=blog_date.year,
+                                                         created_time__month=blog_date.month).count()
 
     context = {}
     context['page_range'] = page_range
     context['page_of_blogs'] = page_of_blogs
     context['blog_types'] = BlogType.objects.annotate(blog_count=Count('blog'))
-    context['blog_dates'] = Blog.objects.dates('created_time', 'month', order="DESC")
+    context['blog_dates'] = blog_dates_dict
     return render_to_response('blog_list.html', context)
 
 
@@ -77,13 +83,18 @@ def blog_with_type(request, blog_type_pk):
         page_range.insert(0, 1)
     if page_range[-1] != paginator.num_pages:
         page_range.append(paginator.num_pages)
-
+    blog_dates = Blog.objects.dates('created_time', 'month', order="DESC")
+    blog_dates_dict = {}
+    for blog_date in blog_dates:
+        blog_dates_dict[blog_date] = Blog.objects.filter(created_time__year=blog_date.year,
+                                                         created_time__month=blog_date.month).count()
 
     context['blog_type'] = blog_type
     context['blogs'] = blogs_all_list
     context['page_range'] = page_range
     context['page_of_blogs'] = page_of_blogs
     context['blog_types'] = BlogType.objects.annotate(blog_count=Count('blog'))
+    context['blog_dates'] = blog_dates_dict
     return render_to_response('blog_with_type.html', context)
 
 
@@ -115,10 +126,16 @@ def blog_with_date(request, year, month):
     if page_range[-1] != paginator.num_pages:
         page_range.append(paginator.num_pages)
 
+    blog_dates = Blog.objects.dates('created_time', 'month', order="DESC")
+    blog_dates_dict = {}
+    for blog_date in blog_dates:
+        blog_dates_dict[blog_date] = Blog.objects.filter(created_time__year=blog_date.year,
+                                                         created_time__month=blog_date.month).count()
+
     context['blogs'] = blogs_all_list
     context['page_range'] = page_range
     context['page_of_blogs'] = page_of_blogs
     context['blog_types'] = BlogType.objects.annotate(blog_count=Count('blog'))
     context['blog_with_date'] = "%s年%s月" % (year, month)
-    context['blog_dates'] = Blog.objects.dates('created_time', 'month', order="DESC")
+    context['blog_dates'] = blog_dates_dict
     return render_to_response('blog_with_date.html', context)
