@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from .models import Blog, BlogType
 from django.core.paginator import Paginator
+from django.db.models import Count
 
 
 def blog_list(request):
@@ -29,10 +30,12 @@ def blog_list(request):
         page_range.insert(0, 1)
     if page_range[-1] != paginator.num_pages:
         page_range.append(paginator.num_pages)
+
+
     context = {}
     context['page_range'] = page_range
     context['page_of_blogs'] = page_of_blogs
-    context['blog_types'] = BlogType.objects.all()
+    context['blog_types'] = BlogType.objects.annotate(blog_count=Count('blog'))
     context['blog_dates'] = Blog.objects.dates('created_time', 'month', order="DESC")
     return render_to_response('blog_list.html', context)
 
@@ -80,7 +83,7 @@ def blog_with_type(request, blog_type_pk):
     context['blogs'] = blogs_all_list
     context['page_range'] = page_range
     context['page_of_blogs'] = page_of_blogs
-    context['blog_types'] = BlogType.objects.all()
+    context['blog_types'] = BlogType.objects.annotate(blog_count=Count('blog'))
     return render_to_response('blog_with_type.html', context)
 
 
@@ -115,7 +118,7 @@ def blog_with_date(request, year, month):
     context['blogs'] = blogs_all_list
     context['page_range'] = page_range
     context['page_of_blogs'] = page_of_blogs
-    context['blog_types'] = BlogType.objects.all()
+    context['blog_types'] = BlogType.objects.annotate(blog_count=Count('blog'))
     context['blog_with_date'] = "%s年%s月" % (year, month)
     context['blog_dates'] = Blog.objects.dates('created_time', 'month', order="DESC")
     return render_to_response('blog_with_date.html', context)
