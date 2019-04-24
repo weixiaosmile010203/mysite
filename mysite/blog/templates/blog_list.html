@@ -20,7 +20,7 @@
                                     <spam class="glyphicon glyphicon-time"></spam>
                                     {{ blog.created_time|date:"Y-m-d" }}
                                 </p>
-                                <p>{{ blog.content|truncatechars:122 }}</p>
+                                <p>{{ blog.content|truncatechars:122|safe }}</p>
                             </div>
                         {% empty %}
                             <div class="blog">
@@ -91,7 +91,7 @@
                             {% for blog_date, blog_count in blog_dates.items %}
                                 <li>
                                     <a href="{% url 'blog_with_date' blog_date.year blog_date.month %}">
-                                            {{ blog_date|date:"Y年m月"}} ({{ blog_count }})
+                                        {{ blog_date|date:"Y年m月" }} ({{ blog_count }})
                                     </a>
                                 </li>
                             {% endfor %}

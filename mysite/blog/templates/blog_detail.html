@@ -17,7 +17,7 @@
                         </a></li>
                         <li><span class="glyphicon glyphicon-time"></span>时间：{{ blog.created_time }}</li>
                     </ul>
-                    <div class="blog_content">{{ blog.content }}</div>
+                    <div class="blog_content">{{ blog.content|safe }}</div>
                 </div>
                 <div class="more_blog">
                     {% if previous_blog %}
