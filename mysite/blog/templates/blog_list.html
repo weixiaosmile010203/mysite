@@ -13,14 +13,17 @@
                     <div class="panel-body">
                         {% for blog in page_of_blogs.object_list %}
                             <div class="blog">
-                                <h3><a href="{% url 'blog_detail' blog.pk %}">{{ blog.title }}</a></h3>
+                                <h3><a href="{% url 'blog_detail' blog.pk %}">{{ blog.title }} </a> </h3>
                                 <p class="blog_info">
                                     <span class="glyphicon glyphicon-tags"></span> <a
                                         href="{% url 'blog_with_type' blog.blog_type.pk %}">{{ blog.blog_type }}</a>
                                     <spam class="glyphicon glyphicon-time"></spam>
                                     {{ blog.created_time|date:"Y-m-d" }}
+                                    <span class="glyphicon glyphicon-stats"></span>
+                                    {{ blog.read_num }}
                                 </p>
                                 <p>{{ blog.content|truncatechars:122|safe }}</p>
+
                             </div>
                         {% empty %}
                             <div class="blog">
